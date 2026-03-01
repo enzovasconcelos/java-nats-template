@@ -1,0 +1,12 @@
+{
+  "name": "java-nats-template",
+  "description": "A template that generates a Java NATS client",
+  "version": "0.0.1",
+  "generator": {
+    "renderer": "react",
+    "supportedProtocols": ["nats"]
+  },
+  "dependencies": {
+    "@asyncapi/generator-react-sdk": "^1.1.2"
+  }
+}
