@@ -1,0 +1,64 @@
+
+asyncapi: 2.6.0
+
+info:
+  title: Temperature Service
+  version: 1.0.0
+  description: This service is in charge of processing all the events related to temperature.
+
+servers:
+  dev:
+    url: localhost #in case you're using local mosquitto instance, change this value to localhost.
+    protocol: mqtt
+
+channels:
+  temperature/dropped:
+    description: Notifies the user when the temperature drops past a certain point.
+    publish:
+      operationId: temperatureDrop
+      message:
+        description: Message that is being sent when the temperature drops past a certain point.
+        payload:
+          type: object
+          additionalProperties: false
+          properties:
+            temperatureId:
+                type: string
+  temperature/risen:
+    description: Notifies the user when the temperature rises past a certain point.
+    publish:
+      operationId: temperatureRise
+      message:
+        description: Message that is being sent when the temperature rises past a certain point.
+        payload:
+          type: object
+          additionalProperties: false
+          properties:
+            temperatureId:
+              type: string             
+  streetlight/{streetlightId}/event/turnon:
+    description: Listener of example 
+    parameters: 
+      streetlightId:
+        description: "the ID of the Streetlight"
+        schema: 
+          type: string
+    subscribe:
+      operationId: "Publish when the streetlight gets turned on"
+      message: 
+        payload:
+          type: "object"
+          additionalProperties: false
+          required: ["lumen"]
+          properties: 
+            lumen: 
+              type: "integer"
+              description: "How bright should the light be"
+components:
+  schemas:
+    temperatureId:
+      type: object
+      additionalProperties: false
+      properties:
+        temperatureId:
+          type: string
